@@ -7,7 +7,9 @@ public class playerMovement : MonoBehaviour
     public Rigidbody playerPhysics;
     public Transform player;
     public Transform camera;
+    [Range(0.1f, 0.4f)]
     public float step = 0.1f;
+    [Range(1.0f, 10.0f)]
     public float mouseSensitivity = 1f;
     public float gravity;
     private float velX, velY, velZ, rX, rY, rZ;
