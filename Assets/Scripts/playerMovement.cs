@@ -11,9 +11,9 @@ public class playerMovement : MonoBehaviour
     public float moveSpeed = 1f; //units per second
     [Range(1.0f, 10.0f)]
     public float mouseSensitivity = 1f;
-    public float gravity;
-    private float velX, velY, velZ, rX, rY, rZ;
-    private float floorheight = 0f;
+    [Range(10f, 100f)]
+    public float jumpForce = 50;
+    private float rX, rY, rZ;
 
 
 
@@ -131,9 +131,9 @@ public class playerMovement : MonoBehaviour
 
     private void playerCameraPhysics()
     {
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space) && playerPhysics.velocity.y == 0)
         {
-            playerPhysics.AddForce(new Vector3(0f, 20f, 0f));
+            playerPhysics.AddForce(new Vector3(0f, jumpForce, 0f));
         }
     }
 
