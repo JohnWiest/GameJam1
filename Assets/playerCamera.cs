@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class playerCamera : MonoBehaviour
 {
-    public Transform pointPrefab;
-    public Rigidbody body;
+    public Rigidbody playerPhysics;
+    public Transform player;
+    public Transform camera;
     public float step = 0.1f;
     public float sensitivity = 1f;
     public float floorheight = 0f;
@@ -14,7 +15,7 @@ public class playerCamera : MonoBehaviour
 
     private void moveCameraWASD(Transform point)
     {
-        float Ry = point.transform.rotation.eulerAngles.y;
+        float Ry = camera.transform.rotation.eulerAngles.y;
         if (directionPressed[0])
         {
             point.localPosition += new Vector3(step * Mathf.Sin(D2R(Ry)), 0f, step * Mathf.Cos(D2R(Ry)));
@@ -89,21 +90,17 @@ public class playerCamera : MonoBehaviour
     {
         float Rx = point.transform.rotation.eulerAngles.x;
         float Ry = point.transform.rotation.eulerAngles.y;
-        float Rz = point.transform.rotation.eulerAngles.z;
-
         float mouseXValue = Input.GetAxis("Mouse X");
         float mouseYValue = Input.GetAxis("Mouse Y");
         point.localRotation = Quaternion.Euler(Rx - sensitivity * mouseYValue, Ry + sensitivity * mouseXValue, 0f);
-        Debug.Log(point.transform.rotation.eulerAngles.y);
+        Rx = point.transform.rotation.eulerAngles.x;
 
-        if (180.0f > point.transform.rotation.eulerAngles.x && point.transform.rotation.eulerAngles.x > 89.0f)
+        if (180.0f > Rx && Rx > 89.0f)
         {
-            Debug.Log("True");
             point.localRotation = Quaternion.Euler(89.0f, point.transform.rotation.eulerAngles.y, 0f);
         }
-        else if (180.0f < point.transform.rotation.eulerAngles.x && point.transform.rotation.eulerAngles.x < 275.0f)
+        else if (180.0f < Rx && Rx < 275.0f)
         {
-            Debug.Log("True");
             point.localRotation = Quaternion.Euler(275.0f, point.transform.rotation.eulerAngles.y, 0f);
         }
 
@@ -142,8 +139,8 @@ public class playerCamera : MonoBehaviour
     {
         lockMouse();
         checkDirectionPressed(directionPressed);
-        moveCameraWASD(pointPrefab);
-        rotateCamera(pointPrefab);
-        playerCameraPhysics(body);
+        moveCameraWASD(player);
+        rotateCamera(camera);
+        playerCameraPhysics(playerPhysics);
     }
 }
