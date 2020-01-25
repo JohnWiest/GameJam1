@@ -2,15 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class playerCamera : MonoBehaviour
+public class playerMovement : MonoBehaviour
 {
     public Rigidbody playerPhysics;
     public Transform player;
     public Transform camera;
     public float step = 0.1f;
-    public float sensitivity = 1f;
-    public float floorheight = 0f;
-    public float Rx, Ry, Rz;
+    public float mouseSensitivity = 1f;
+    public float gravity;
+    private float velX, velY, velZ, rX, rY, rZ;
+    private float floorheight = 0f;
+
 
 
     private bool[] directionPressed = new bool[6];
@@ -19,19 +21,19 @@ public class playerCamera : MonoBehaviour
     {
         if (directionPressed[0])
         {
-            playerPhysics.MovePosition(point.localPosition + new Vector3(step * Mathf.Sin(D2R(Ry)), 0f, step * Mathf.Cos(D2R(Ry))));
+            point.localPosition += new Vector3(step * Mathf.Sin(D2R(rY)), 0f, step * Mathf.Cos(D2R(rY)));
         }
         if (directionPressed[1])
         {
-            playerPhysics.MovePosition(point.localPosition - new Vector3(step * Mathf.Sin(D2R(Ry)), 0f, step * Mathf.Cos(D2R(Ry))));
+            point.localPosition -= new Vector3(step * Mathf.Sin(D2R(rY)), 0f, step * Mathf.Cos(D2R(rY)));
         }
         if (directionPressed[2])
         {
-            playerPhysics.MovePosition(point.localPosition - new Vector3(step * Mathf.Cos(D2R(180f - Ry)), 0f, step * Mathf.Sin(D2R(180f - Ry))));
+            point.localPosition -= new Vector3(step * Mathf.Cos(D2R(180f - rY)), 0f, step * Mathf.Sin(D2R(180f - rY)));
         }
         if (directionPressed[3])
         {
-            playerPhysics.MovePosition(point.localPosition + new Vector3(step * Mathf.Cos(D2R(180f - Ry)), 0f, step * Mathf.Sin(D2R(180f - Ry))));
+            point.localPosition += new Vector3(step * Mathf.Cos(D2R(180f - rY)), 0f, step * Mathf.Sin(D2R(180f - rY)));
         }
     }
 
@@ -91,17 +93,17 @@ public class playerCamera : MonoBehaviour
     {
         float mouseXValue = Input.GetAxis("Mouse X");
         float mouseYValue = Input.GetAxis("Mouse Y");
-        point.localRotation = Quaternion.Euler(Rx - sensitivity * mouseYValue, Ry + sensitivity * mouseXValue, 0f);
-        Rx = point.transform.rotation.eulerAngles.x;
-        Ry = camera.transform.rotation.eulerAngles.y;
+        point.localRotation = Quaternion.Euler(rX - mouseSensitivity * mouseYValue, rY + mouseSensitivity * mouseXValue, 0f);
+        rX = camera.transform.rotation.eulerAngles.x;
+        rY = camera.transform.rotation.eulerAngles.y;
 
-        if (180.0f > Rx && Rx > 89.0f)
+        if (180.0f > rX && rX > 89.0f)
         {
-            point.localRotation = Quaternion.Euler(89.0f, point.transform.rotation.eulerAngles.y, 0f);
+            camera.localRotation = Quaternion.Euler(89.0f, camera.transform.rotation.eulerAngles.y, 0f);
         }
-        else if (180.0f < Rx && Rx < 275.0f)
+        else if (180.0f < rX && rX < 275.0f)
         {
-            point.localRotation = Quaternion.Euler(275.0f, point.transform.rotation.eulerAngles.y, 0f);
+            camera.localRotation = Quaternion.Euler(275.0f, camera.transform.rotation.eulerAngles.y, 0f);
         }
 
 
@@ -124,24 +126,30 @@ public class playerCamera : MonoBehaviour
         return Mathf.PI * degrees / 180.0f;
     }
 
-    private void playerCameraPhysics(Rigidbody body)
+    private void playerCameraPhysics()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space))
         {
-            body.AddForce(new Vector3(0, 5, 0), ForceMode.Impulse);
+            playerPhysics.AddForce(new Vector3(0f, 20f, 0f));
         }
     }
 
-   
+    // Start is called before the first frame update
+    void Start()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    // Update is called once per frame
     void Update()
     {
-        Rx = camera.transform.rotation.eulerAngles.x;
-        Ry = camera.transform.rotation.eulerAngles.y;
-        Rz = camera.transform.rotation.eulerAngles.z;
+        rX = camera.transform.rotation.eulerAngles.x;
+        rY = camera.transform.rotation.eulerAngles.y;
+        rZ = camera.transform.rotation.eulerAngles.z;
         lockMouse();
         checkDirectionPressed(directionPressed);
         moveCameraWASD(player);
         rotateCamera(camera);
-        playerCameraPhysics(playerPhysics);
+        playerCameraPhysics();
     }
 }
