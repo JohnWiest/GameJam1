@@ -7,8 +7,8 @@ public class playerMovement : MonoBehaviour
     public Rigidbody playerPhysics;
     public Transform player;
     public Transform camera;
-    [Range(0.1f, 0.4f)]
-    public float step = 0.1f;
+    [Range(1f, 10f)]
+    public float moveSpeed = 1f; //units per second
     [Range(1.0f, 10.0f)]
     public float mouseSensitivity = 1f;
     public float gravity;
@@ -21,21 +21,22 @@ public class playerMovement : MonoBehaviour
 
     private void moveCameraWASD(Transform point)
     {
+        float dT = Time.deltaTime;
         if (directionPressed[0])
         {
-            point.localPosition += new Vector3(step * Mathf.Sin(D2R(rY)), 0f, step * Mathf.Cos(D2R(rY)));
+            point.localPosition += new Vector3(moveSpeed * dT * Mathf.Sin(D2R(rY)), 0f, moveSpeed * dT * Mathf.Cos(D2R(rY)));
         }
         if (directionPressed[1])
         {
-            point.localPosition -= new Vector3(step * Mathf.Sin(D2R(rY)), 0f, step * Mathf.Cos(D2R(rY)));
+            point.localPosition -= new Vector3(moveSpeed * dT * Mathf.Sin(D2R(rY)), 0f, moveSpeed * dT * Mathf.Cos(D2R(rY)));
         }
         if (directionPressed[2])
         {
-            point.localPosition -= new Vector3(step * Mathf.Cos(D2R(180f - rY)), 0f, step * Mathf.Sin(D2R(180f - rY)));
+            point.localPosition -= new Vector3(moveSpeed * dT * Mathf.Cos(D2R(180f - rY)), 0f, moveSpeed * dT * Mathf.Sin(D2R(180f - rY)));
         }
         if (directionPressed[3])
         {
-            point.localPosition += new Vector3(step * Mathf.Cos(D2R(180f - rY)), 0f, step * Mathf.Sin(D2R(180f - rY)));
+            point.localPosition += new Vector3(moveSpeed * dT * Mathf.Cos(D2R(180f - rY)), 0f, moveSpeed * dT * Mathf.Sin(D2R(180f - rY)));
         }
     }
 
@@ -145,6 +146,7 @@ public class playerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(1f / Time.deltaTime);
         rX = camera.transform.rotation.eulerAngles.x;
         rY = camera.transform.rotation.eulerAngles.y;
         rZ = camera.transform.rotation.eulerAngles.z;
