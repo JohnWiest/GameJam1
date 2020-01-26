@@ -7,37 +7,49 @@ public class playerMovement : MonoBehaviour
     public Rigidbody playerPhysics;
     public Transform player;
     public Transform camera;
-    [Range(1f, 10f)]
+    [Range(10f, 100f)]
     public float moveSpeed = 1f; //units per second
     [Range(1.0f, 10.0f)]
     public float mouseSensitivity = 1f;
     [Range(10f, 100f)]
-    public float jumpForce = 50;
+    public float jumpForce = 50f;
+    public float fallScaler = 2.5f;
+    public float lowJumpScaler = 2f;
     private float rX, rY, rZ;
 
 
 
     private bool[] directionPressed = new bool[6];
 
-    private void moveCameraWASD(Transform point)
+    private void movePlayer(Rigidbody body)
     {
         float dT = Time.deltaTime;
+        float yaw = D2R(rY);
+        float cosYaw = Mathf.Cos(yaw);
+        float sinYaw = Mathf.Sin(yaw);
+
+        Vector3 movedirection = new Vector3(0f, 0f, 0f);
+        Vector3 move = new Vector3(0f, 0f, 0f);
+        Vector3 speed = new Vector3(moveSpeed * dT, 0f, moveSpeed * dT);
+
         if (directionPressed[0])
         {
-            point.localPosition += new Vector3(moveSpeed * dT * Mathf.Sin(D2R(rY)), 0f, moveSpeed * dT * Mathf.Cos(D2R(rY)));
+            movedirection += new Vector3(sinYaw, 0f, cosYaw);
         }
         if (directionPressed[1])
         {
-            point.localPosition -= new Vector3(moveSpeed * dT * Mathf.Sin(D2R(rY)), 0f, moveSpeed * dT * Mathf.Cos(D2R(rY)));
+            movedirection -= new Vector3(sinYaw, 0f, cosYaw);
         }
         if (directionPressed[2])
         {
-            point.localPosition -= new Vector3(moveSpeed * dT * Mathf.Cos(D2R(180f - rY)), 0f, moveSpeed * dT * Mathf.Sin(D2R(180f - rY)));
+            movedirection += new Vector3(cosYaw, 0f, -1f *sinYaw);
         }
         if (directionPressed[3])
         {
-            point.localPosition += new Vector3(moveSpeed * dT * Mathf.Cos(D2R(180f - rY)), 0f, moveSpeed * dT * Mathf.Sin(D2R(180f - rY)));
+            movedirection -= new Vector3(cosYaw, 0f, -1f * sinYaw);
         }
+        movedirection = movedirection.normalized;
+        body.MovePosition(player.localPosition + Vector3.Scale(movedirection, speed));
     }
 
     private void checkDirectionPressed(bool[] directionPressed)
@@ -129,11 +141,22 @@ public class playerMovement : MonoBehaviour
         return Mathf.PI * degrees / 180.0f;
     }
 
-    private void playerCameraPhysics()
+    private void playerJump(Rigidbody body)
     {
-        if (Input.GetKey(KeyCode.Space) && playerPhysics.velocity.y == 0)
+        Debug.Log(body.velocity.y);
+        Debug.Log(Mathf.Floor(body.velocity.y));
+        if (Input.GetKey(KeyCode.Space) && (Mathf.Floor(Mathf.Abs(body.velocity.y)) == 0))
         {
+            // Debug.Log("here");
             playerPhysics.AddForce(new Vector3(0f, jumpForce, 0f));
+        }
+        if (body.velocity.y < 0)
+        {
+            body.velocity += Vector3.up * Physics.gravity.y * (fallScaler - 1) * Time.deltaTime;
+        }
+        else if (body.velocity.y > 0 && !Input.GetKey(KeyCode.Space))
+        {
+            body.velocity += Vector3.up * Physics.gravity.y * (lowJumpScaler - 1) * Time.deltaTime;
         }
     }
 
@@ -152,8 +175,8 @@ public class playerMovement : MonoBehaviour
         rZ = camera.transform.rotation.eulerAngles.z;
         lockMouse();
         checkDirectionPressed(directionPressed);
-        moveCameraWASD(player);
         rotateCamera(camera);
-        playerCameraPhysics();
+        movePlayer(playerPhysics);
+        playerJump(playerPhysics);
     }
 }
