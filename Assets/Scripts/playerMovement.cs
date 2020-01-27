@@ -11,7 +11,7 @@ public class playerMovement : MonoBehaviour
     public float moveSpeed = 1f; //units per second
     [Range(1.0f, 10.0f)]
     public float mouseSensitivity = 1f;
-    [Range(10f, 100f)]
+    [Range(10f, 300f)]
     public float jumpForce = 50f;
     public float fallScaler = 2.5f;
     public float lowJumpScaler = 2f;
@@ -143,11 +143,9 @@ public class playerMovement : MonoBehaviour
 
     private void playerJump(Rigidbody body)
     {
-        Debug.Log(body.velocity.y);
-        Debug.Log(Mathf.Floor(body.velocity.y));
+
         if (Input.GetKey(KeyCode.Space) && (Mathf.Floor(Mathf.Abs(body.velocity.y)) == 0))
         {
-            // Debug.Log("here");
             playerPhysics.AddForce(new Vector3(0f, jumpForce, 0f));
         }
         if (body.velocity.y < 0)
