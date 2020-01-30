@@ -8,13 +8,14 @@ public class Shoot : MonoBehaviour
     public KeyCode shootKey = KeyCode.F;
     public GameObject projectile;
     public float shootForce;
-
+    public AudioClip shootNoise;
+    AudioSource audioSource;
 
 
 // Use this for initialization
     void Start ()
     {
-
+        audioSource = GetComponent<AudioSource>();
     }
 
 // Update is called once per frame
@@ -22,6 +23,7 @@ public class Shoot : MonoBehaviour
     {
         if (Input.GetKeyDown(shootKey))
         {
+            audioSource.PlayOneShot(shootNoise);
             GameObject shot = GameObject.Instantiate(projectile, transform.position, transform.rotation);
             shot.GetComponent<Rigidbody>().AddForce(transform.forward * shootForce);
             shot.GetComponent<Rigidbody>().useGravity = false;

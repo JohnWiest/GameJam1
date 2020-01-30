@@ -1380,6 +1380,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   particleEffect: {fileID: 8228766793282939329, guid: cbd1527e2cee6e449a863576d2fca22a,
     type: 3}
+  deathSoundHolder: {fileID: 7391943860983413249, guid: 390fca9bd2933104f9442b837558ab04,
+    type: 3}
   health: 1
 --- !u!1 &6006010754597454159
 GameObject:
