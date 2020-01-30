@@ -11,11 +11,12 @@ public class playerMovement : MonoBehaviour
     public float moveSpeed = 1f; //units per second
     [Range(1.0f, 10.0f)]
     public float mouseSensitivity = 1f;
-    [Range(10f, 300f)]
+    [Range(100f, 1000f)]
     public float jumpForce = 50f;
     public float fallScaler = 2.5f;
     public float lowJumpScaler = 2f;
     private float rX, rY, rZ;
+    private bool onGround = false;
 
 
 
@@ -144,17 +145,22 @@ public class playerMovement : MonoBehaviour
     private void playerJump(Rigidbody body)
     {
 
-        if (Input.GetKey(KeyCode.Space) && (Mathf.Floor(Mathf.Abs(body.velocity.y)) == 0))
+        if (Input.GetKey(KeyCode.Space) && onGround == true)
         {
             playerPhysics.AddForce(new Vector3(0f, jumpForce, 0f));
+            onGround = false;
         }
         if (body.velocity.y < 0)
         {
             body.velocity += Vector3.up * Physics.gravity.y * (fallScaler - 1) * Time.deltaTime;
         }
-        else if (body.velocity.y > 0 && !Input.GetKey(KeyCode.Space))
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.name == "Ground")
         {
-            body.velocity += Vector3.up * Physics.gravity.y * (lowJumpScaler - 1) * Time.deltaTime;
+            onGround = true;
         }
     }
 
@@ -167,7 +173,7 @@ public class playerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(1f / Time.deltaTime);
+        // Debug.Log(1f / Time.deltaTime);
         rX = camera.transform.rotation.eulerAngles.x;
         rY = camera.transform.rotation.eulerAngles.y;
         rZ = camera.transform.rotation.eulerAngles.z;

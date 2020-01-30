@@ -4,9 +4,12 @@
 
 public class Shoot : MonoBehaviour
  {
+    public Transform player;
     public KeyCode shootKey = KeyCode.F;
     public GameObject projectile;
     public float shootForce;
+
+
 
 // Use this for initialization
     void Start ()
@@ -22,6 +25,8 @@ public class Shoot : MonoBehaviour
             GameObject shot = GameObject.Instantiate(projectile, transform.position, transform.rotation);
             shot.GetComponent<Rigidbody>().AddForce(transform.forward * shootForce);
             shot.GetComponent<Rigidbody>().useGravity = false;
+            shot.GetComponent<killProjectile>().player = player;
+            shot.GetComponent<killProjectile>().self = shot.GetComponent<Transform>();
         }
     }
  }
