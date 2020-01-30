@@ -6,7 +6,7 @@ public class snowmanDeath : MonoBehaviour
 {
     public GameObject particleEffect;
     public GameObject deathSoundHolder;
-    public int health = 1;
+    public int health;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,11 +16,19 @@ public class snowmanDeath : MonoBehaviour
     {
         if (collision.gameObject.name == "Projectile(Clone)")
         {
+            Debug.Log(health);
             health -= 1;
-            if (health == 0)
-            {
-                GameObject soundEffect = GameObject.Instantiate(deathSoundHolder, transform.position + new Vector3(0f, 1f, 0f), transform.rotation);
-            }
+            Debug.Log(health);
+        }
+        else if(collision.gameObject.name == "Rifle Projectile 1(Clone)")
+        {
+   
+            health -= 2;
+        }
+        if (health == 0)
+        {
+            GameObject soundEffect = GameObject.Instantiate(deathSoundHolder, transform.position + new Vector3(0f, 1f, 0f), transform.rotation);
+            Destroy(soundEffect, 2.0f);
         }
     }
 
@@ -31,6 +39,7 @@ public class snowmanDeath : MonoBehaviour
         {
             Global.count++;
             GameObject explosion = GameObject.Instantiate(particleEffect, transform.position + new Vector3(0f, 1f, 0f), transform.rotation);
+            Destroy(explosion, 2.0f);
             Destroy(gameObject);
         }
     }

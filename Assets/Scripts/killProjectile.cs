@@ -14,6 +14,7 @@ public class killProjectile : MonoBehaviour
         if (collision.gameObject.name != "Projectile(Clone)")
         {
             GameObject explosion = GameObject.Instantiate(particleEffect, transform.position, transform.rotation);
+            Destroy(explosion, 2.0f);
             Destroy(gameObject);
         }
     }
