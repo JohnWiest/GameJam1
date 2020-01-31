@@ -4,12 +4,17 @@ using UnityEngine;
 
 public class aimGun : MonoBehaviour
 {
-    private Transform gun;
+    [Range(0f,100f)]
+    public float zoomFov;
     public Weapons currentWeapon;
+
+    private float normalFov;
     private bool aimed = false;
+    private Transform gun;
 
     private void Start()
     {
+        Debug.Log(Camera.current.fieldOfView);
         gun = currentWeapon.weapons[currentWeapon.currentWeapon].transform;
     }
     // Update is called once per frame
@@ -18,11 +23,13 @@ public class aimGun : MonoBehaviour
         gun = currentWeapon.weapons[currentWeapon.currentWeapon].transform;
         if (Input.GetKey(KeyCode.Mouse1) && aimed == false)
         {
+            Camera.current.fieldOfView = zoomFov;
             gun.localPosition += new Vector3(-0.4f, 0.15f, 0f);
             aimed = true;
         }
         else if (!Input.GetKey(KeyCode.Mouse1) && aimed == true)
         {
+            Camera.current.fieldOfView = 60;
             gun.localPosition -= new Vector3(-0.4f, 0.15f, 0f);
             aimed = false;
         }

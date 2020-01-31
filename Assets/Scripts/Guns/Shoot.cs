@@ -21,7 +21,7 @@ public class Shoot : MonoBehaviour
 // Update is called once per frame
     void Update ()
     {
-        if (Input.GetKeyDown(shootKey))
+        if (Input.GetKey(shootKey))
         {
             audioSource.PlayOneShot(shootNoise);
             GameObject shot = GameObject.Instantiate(projectile, transform.position, transform.rotation);

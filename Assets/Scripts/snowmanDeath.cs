@@ -20,7 +20,7 @@ public class snowmanDeath : MonoBehaviour
             health -= 1;
             Debug.Log(health);
         }
-        else if(collision.gameObject.name == "Rifle Projectile 1(Clone)")
+        else if(collision.gameObject.name == "Rifle Projectile(Clone)")
         {
    
             health -= 2;
