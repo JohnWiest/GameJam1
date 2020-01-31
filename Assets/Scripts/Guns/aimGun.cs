@@ -8,7 +8,7 @@ public class aimGun : MonoBehaviour
     public float zoomFov;
     public Weapons currentWeapon;
 
-    private float normalFov;
+    private float normalFov = 60;
     private bool aimed = false;
     private Transform gun;
 
@@ -21,15 +21,25 @@ public class aimGun : MonoBehaviour
     void Update()
     {
         gun = currentWeapon.weapons[currentWeapon.currentWeapon].transform;
-        if (Input.GetKey(KeyCode.Mouse1) && aimed == false)
+        if (Input.GetKey(KeyCode.Mouse1) && aimed == false && currentWeapon.currentWeapon == 0)
+        {
+            gun.localPosition += new Vector3(-0.4f, 0.15f, 0f);
+            aimed = true;
+        }
+        else if (!Input.GetKey(KeyCode.Mouse1) && aimed == true && currentWeapon.currentWeapon == 0)
+        {
+            gun.localPosition -= new Vector3(-0.4f, 0.15f, 0f);
+            aimed = false;
+        }
+        else if (Input.GetKey(KeyCode.Mouse1) && aimed == false && currentWeapon.currentWeapon == 1)
         {
             Camera.current.fieldOfView = zoomFov;
             gun.localPosition += new Vector3(-0.4f, 0.15f, 0f);
             aimed = true;
         }
-        else if (!Input.GetKey(KeyCode.Mouse1) && aimed == true)
+        else if (!Input.GetKey(KeyCode.Mouse1) && aimed == true && currentWeapon.currentWeapon == 1)
         {
-            Camera.current.fieldOfView = 60;
+            Camera.current.fieldOfView = normalFov;
             gun.localPosition -= new Vector3(-0.4f, 0.15f, 0f);
             aimed = false;
         }

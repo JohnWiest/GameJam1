@@ -7439,7 +7439,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea4272983c4e24a42a1413c55d20ad35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  zoomFov: 60
+  zoomFov: 20
   currentWeapon: {fileID: 732341252}
 --- !u!4 &764297198 stripped
 Transform:
