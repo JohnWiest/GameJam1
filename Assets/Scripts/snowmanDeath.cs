@@ -7,23 +7,27 @@ public class snowmanDeath : MonoBehaviour
     public GameObject particleEffect;
     public GameObject deathSoundHolder;
     public int health;
+    private int damage;
     // Start is called before the first frame update
     void Start()
     {
+        FloatingTextControler.Initialize();
     }
 
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.name == "Projectile(Clone)")
         {
-            Debug.Log(health);
-            health -= 1;
-            Debug.Log(health);
+            damage = Random.Range(20, 45);
+            FloatingTextControler.CreateFloatingText(damage.ToString(), gameObject.transform);
+            health -= damage;
         }
-        else if(collision.gameObject.name == "Rifle Projectile(Clone)")
+        else if(collision.gameObject.name == "Lazer Projectile(Clone)")
         {
-   
-            health -= 2;
+
+            damage = Random.Range(70, 130);
+            FloatingTextControler.CreateFloatingText(damage.ToString(), gameObject.transform);
+            health -= damage;
         }
         if (health == 0)
         {

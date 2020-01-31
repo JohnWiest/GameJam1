@@ -1382,7 +1382,7 @@ MonoBehaviour:
     type: 3}
   deathSoundHolder: {fileID: 7391943860983413249, guid: 390fca9bd2933104f9442b837558ab04,
     type: 3}
-  health: 2
+  health: 100
 --- !u!1 &6006010754597454159
 GameObject:
   m_ObjectHideFlags: 0
