@@ -15,6 +15,7 @@ public class ShootRifle : MonoBehaviour
     private float chargingTime;
     private bool charged;
     private bool chargeStarted;
+    private float coolDown;
 
     // Use this for initialization
     void Start()
@@ -23,15 +24,16 @@ public class ShootRifle : MonoBehaviour
         chargingTime = 0;
         charged = false;
         chargeStarted = false;
+        coolDown = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(shootKey))
+        coolDown -= Time.deltaTime;
+        if (Input.GetKey(shootKey) && coolDown<=0)
         {
             chargingTime += Time.deltaTime;
-            Debug.Log(chargingTime);
             if(chargeStarted == false)
             {
                 chargeStarted = true;
@@ -41,7 +43,6 @@ public class ShootRifle : MonoBehaviour
             if (chargingTime >= 2)
             {
                 charged = true;
-                Debug.Log(charged);
             }
         }
         else
@@ -55,6 +56,7 @@ public class ShootRifle : MonoBehaviour
         }
         if (charged && !(Input.GetKey(shootKey)))
         {
+            coolDown = 2f;
             audioSource.Stop();
             audioSource.clip = shootNoise;
             audioSource.Play();
@@ -62,7 +64,6 @@ public class ShootRifle : MonoBehaviour
             chargeStarted = false;
             charged = false;
             GameObject shot = GameObject.Instantiate(projectile, transform.position + new Vector3(0f,0f,0f), transform.rotation);
-            Debug.Log(shot.transform.localPosition);
             shot.GetComponent<Rigidbody>().AddForce(transform.forward * shootForce);
             shot.GetComponent<Rigidbody>().useGravity = false;
             shot.GetComponent<killProjectile>().player = player;
@@ -72,6 +73,7 @@ public class ShootRifle : MonoBehaviour
     }
     IEnumerator playSoundAfterOneSeconds()
     {
+        Debug.Log(1);
         yield return new WaitForSeconds(1.4f);
         audioSource.clip = delayNoise;
         audioSource.Play();

@@ -11750,7 +11750,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Player: {fileID: 1052773247}
   snowman: {fileID: 5678660529294489562, guid: 4a2f9eed78e65384d9fa2a2b3423ddf4, type: 3}
-  movementSpeed: 32.2
+  movementSpeed: 6.7
 --- !u!1 &1844830426
 GameObject:
   m_ObjectHideFlags: 0
