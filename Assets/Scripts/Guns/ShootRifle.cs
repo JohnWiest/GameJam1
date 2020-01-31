@@ -61,7 +61,8 @@ public class ShootRifle : MonoBehaviour
             chargingTime = 0;
             chargeStarted = false;
             charged = false;
-            GameObject shot = GameObject.Instantiate(projectile, transform.position, transform.rotation);
+            GameObject shot = GameObject.Instantiate(projectile, transform.position + new Vector3(0f,0f,0f), transform.rotation);
+            Debug.Log(shot.transform.localPosition);
             shot.GetComponent<Rigidbody>().AddForce(transform.forward * shootForce);
             shot.GetComponent<Rigidbody>().useGravity = false;
             shot.GetComponent<killProjectile>().player = player;
