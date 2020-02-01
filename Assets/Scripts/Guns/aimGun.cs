@@ -14,7 +14,6 @@ public class aimGun : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log(Camera.current.fieldOfView);
         gun = currentWeapon.weapons[currentWeapon.currentWeapon].transform;
     }
     // Update is called once per frame

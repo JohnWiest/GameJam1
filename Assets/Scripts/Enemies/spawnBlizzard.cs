@@ -8,8 +8,7 @@ public class spawnBlizzard : MonoBehaviour
     public GameObject blizzard;
 
     private System.Random r = new System.Random(23);
-    private blizzardMovement movementScript;
-    int i = 0;
+    private blizzardEvents entityEvents;
 
     private GameObject[] blizzards = new GameObject[1];
     //Start is called before the first frame update
@@ -27,8 +26,8 @@ public class spawnBlizzard : MonoBehaviour
             if (!blizzards[i])
             {
                 blizzards[i] = GameObject.Instantiate(blizzard, new Vector3((float)r.Next(-54, 54), 2f, (float)r.Next(-10, 54)), transform.rotation);
-                movementScript = blizzards[i].GetComponent<blizzardMovement>();
-                movementScript.player = Player;
+                entityEvents = blizzards[i].GetComponent<blizzardEvents>();
+                entityEvents.player = Player;
             }
         }
     }

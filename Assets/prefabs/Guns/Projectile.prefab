@@ -216,8 +216,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  self: {fileID: 0}
-  particleEffect: {fileID: 3084824191068613041, guid: acaad61072613df46bae31a283713572,
+  fireExplosion: {fileID: 3084824191068613041, guid: acaad61072613df46bae31a283713572,
+    type: 3}
+  snowExplosion: {fileID: 2318580661676935167, guid: 3dc10ed1bcf22dc45a515a297f45a63b,
     type: 3}
 --- !u!1001 &407653192045097977
 PrefabInstance:

@@ -67,7 +67,6 @@ public class ShootRifle : MonoBehaviour
             shot.GetComponent<Rigidbody>().AddForce(transform.forward * shootForce);
             shot.GetComponent<Rigidbody>().useGravity = false;
             shot.GetComponent<killProjectile>().player = player;
-            shot.GetComponent<killProjectile>().self = shot.GetComponent<Transform>();
             StartCoroutine(playSoundAfterOneSeconds());
         }
     }
