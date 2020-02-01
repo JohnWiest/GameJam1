@@ -6486,7 +6486,7 @@ MonoBehaviour:
   projectile: {fileID: 1371508627747164564, guid: b6d54adb2ceff4438ab838bff059e031,
     type: 3}
   shootForce: 2700
-  shootNoise: {fileID: 8300000, guid: 471094e0659610b4583d6035695f54ba, type: 3}
+  shootNoise: {fileID: 8300000, guid: cdf8bea8fe9a19a4881513fc9bea5f01, type: 3}
 --- !u!82 &449479506
 AudioSource:
   m_ObjectHideFlags: 0
@@ -7153,7 +7153,7 @@ GameObject:
   - component: {fileID: 635506081}
   - component: {fileID: 635506080}
   m_Layer: 5
-  m_Name: HealthBar
+  m_Name: Health
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17781,6 +17781,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 893546499}
+  - component: {fileID: 893546500}
   m_Layer: 5
   m_Name: Health Bar
   m_TagString: Untagged
@@ -17810,6 +17811,22 @@ RectTransform:
   m_AnchoredPosition: {x: -150, y: -20}
   m_SizeDelta: {x: 200, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &893546500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 893546498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4245bd6f28538f4098e0af60866148e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ImgHealthBar: {fileID: 635506080}
+  TxtHealth: {fileID: 1851697923}
+  Min: 0
+  Max: 100
 --- !u!1001 &902491792
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18755,9 +18772,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1052773247}
-  - component: {fileID: 1052773246}
   - component: {fileID: 1052773248}
   - component: {fileID: 1052773251}
+  - component: {fileID: 1052773246}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -18774,15 +18791,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1052773245}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: caf080b6fd93d934cb4dd315f8e1cb72, type: 3}
+  m_Script: {fileID: 11500000, guid: 0c820c5b3660ce3478df6999c65f917c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playerPhysics: {fileID: 1052773248}
   player: {fileID: 1052773247}
   camera: {fileID: 1334451076}
-  moveSpeed: 60
+  moveSpeed: 60.1
   mouseSensitivity: 4.31
-  jumpForce: 500
+  jumpForce: 491
   fallScaler: 3
   lowJumpScaler: 2
 --- !u!4 &1052773247
