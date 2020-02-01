@@ -29,7 +29,7 @@ public class snowmanDeath : MonoBehaviour
             FloatingTextControler.CreateFloatingText(damage.ToString(), gameObject.transform);
             health -= damage;
         }
-        if (health == 0)
+        if (health <= 0)
         {
             GameObject soundEffect = GameObject.Instantiate(deathSoundHolder, transform.position + new Vector3(0f, 1f, 0f), transform.rotation);
             Destroy(soundEffect, 2.0f);
